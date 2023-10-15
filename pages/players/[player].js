@@ -24,9 +24,6 @@ export default function Player({player}) {
 
 export function getStaticPaths() {
     const paths = getAllPlayerNames();
-
-    console.log(JSON.stringify(paths, null, 2));
-
     return {
         paths,
         fallback: false
