@@ -11,7 +11,7 @@ export default function StatsViewer({players}) {
                 <h1>Greatest cyclopeslayers:</h1>
                 <ul className={styles.playersList}>
                     {players.map(({name, points}, index) => (
-                        <li><Link href={`/players/${name}`}>
+                        <li key={name}><Link href={`/players/${name}`}>
                             <div className={styles.player}>
                                 <div>#{++index} - {name}: {points}</div>
                                 <div><Image src="/images/cyclope-eye.png" alt="Глаз Циклопа" width={40} height={40}/></div>
