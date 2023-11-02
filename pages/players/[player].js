@@ -17,7 +17,7 @@ export default function Player({player}) {
                 <div className={styles.levelsCompleted}>
                     {player.levelsCompleted.map((level, i) => (
                         <div key={i}>
-                            {i < player.levelsCompleted.length / 2 ? (<b>{level}</b>) : (level)}
+                            {level.points >= 100? (<b>{level}</b>) : (level)}
                         </div>
                     ))}
                 </div>
