@@ -2,8 +2,10 @@ import Layout from "../../components/layout";
 import {getAllPlayerNames, getPlayerData} from "../../lib/players";
 import styles from "../../styles/Player.module.css";
 import Image from "next/image";
+import {getSortedDemonsData} from "../../lib/demons";
+import Link from "next/link";
 
-export default function Player({player}) {
+export default function Player({player, allDemons}) {
     return (
         <Layout className={styles.main}>
             <div className={styles.profile}>
@@ -15,11 +17,18 @@ export default function Player({player}) {
                 </div>
                 <h1 className={styles.beatenTitle}>Beaten cyclopes:</h1>
                 <div className={styles.levelsCompleted}>
-                    {player.levelsCompleted.map((level, i) => (
-                        <div key={i}>
-                            {level.points >= 100? (<b>{level}</b>) : (level)}
-                        </div>
-                    ))}
+                    {player.levelsCompleted.map((level, i) => {
+                        const demonIndex = allDemons.findIndex(item => item.title === level);
+
+                        return (
+                            <div key={i}>
+                                {demonIndex < allDemons.length / 2 ? (
+                                    <Link href={`/cyclope/${allDemons[demonIndex].id}`}><b>{level}</b></Link>)
+                                    :
+                                    (<Link href={`/cyclope/${allDemons[demonIndex].id}`}>{level}</Link>)}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </Layout>
@@ -39,12 +48,12 @@ export function getStaticPaths() {
 
 export function getStaticProps({params}) {
     const player = getPlayerData(params.player);
-
-    console.log("The player = " + JSON.stringify(player));
+    const allDemons = getSortedDemonsData();
 
     return {
         props: {
             player,
+            allDemons,
         },
     };
 }
